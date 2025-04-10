@@ -2,215 +2,140 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <!-- Torna a página responsiva para dispositivos móveis -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prática: Pilhas com Lista Encadeada</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 { color: #333; }
-    .pergunta {
-      margin-bottom: 20px;
-      padding: 15px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 5px #ccc;
-    }
-    .opcao {
-      display: block;
-      margin: 5px 0;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background: #eee;
-      cursor: pointer;
-    }
-    .opcao:hover {
-      background: #ddd;
-    }
-    .feedback {
-      margin-top: 10px;
-      font-style: italic;
-    }
-    #resultado {
-      margin-top: 30px;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-    #proximaBtn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      display: none;
-    }
-    .macete { font-weight: bold; }
-    
-    @keyframes cair {
-      0% { transform: translateY(-100%); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    #codigoAnimado {
-      white-space: pre-wrap;
-      animation: cair 2s ease-in;
-      background: #222;
-      color: #0f0;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px #0f0;
-    }
-  </style>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Link para seu CSS customizado -->
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen p-4 md:p-8">
   <!-- Área de apresentação -->
-  <div id="apresentacao" style="background:#000; color:#0f0; font-family:monospace; padding:20px; border-radius:8px; margin-bottom:20px;">
-    <pre id="codigoAnimado"></pre>
-    <h2 style="margin-top:20px;">📘 Pilhas com Lista Encadeada</h2>
-    <p>A pilha funciona no estilo <strong>LIFO</strong> (Last In, First Out). Ou seja, o último valor inserido será o primeiro a ser removido. Usando listas encadeadas, conseguimos implementar essa estrutura de forma dinâmica usando ponteiros.</p>
-    <p>Aqui vão 5 <strong style="color:yellow;">macetes piscantes</strong> para mandar bem:</p>
-    <ul id="macetes">
-      <li class="macete">1️⃣ Sempre inicialize o topo com NULL.</li>
-      <li class="macete">2️⃣ Use malloc/new ao empilhar (alocação dinâmica).</li>
-      <li class="macete">3️⃣ Ao desempilhar, libere memória com free/delete.</li>
-      <li class="macete">4️⃣ Nunca acesse topo->valor sem verificar se topo != NULL.</li>
-      <li class="macete">5️⃣ Para percorrer a pilha, use while (topo != NULL).</li>
-    </ul>
-    <button onclick="iniciarQuestoes()" style="margin-top:20px; padding:10px 20px; font-size:16px; cursor:pointer; background:#0f0; color:#000; border:none; border-radius:5px;">
-      👉 Iniciar Questões
-    </button>
+  <div id="apresentacao" class="bg-gray-900 text-green-400 font-mono rounded-xl p-6 mb-8 shadow-lg max-w-4xl mx-auto fade-in">
+    <div class="typewriter text-sm md:text-base mb-6">
+      struct No {<br>
+      &nbsp;&nbsp;int valor;<br>
+      &nbsp;&nbsp;No* proximo;<br>
+      };<br><br>
+      void empilhar(No*& topo, int valor) {<br>
+      &nbsp;&nbsp;No* novo = new No;<br>
+      &nbsp;&nbsp;novo->valor = valor;<br>
+      &nbsp;&nbsp;novo->proximo = topo;<br>
+      &nbsp;&nbsp;topo = novo;<br>
+      }
+    </div>
+    
+    <div class="flex items-center mb-6">
+      <i class="fas fa-layer-group text-3xl mr-4 text-yellow-400 floating"></i>
+      <h2 class="text-2xl md:text-3xl font-bold">📘 Pilhas com Lista Encadeada</h2>
+    </div>
+    
+    <div class="bg-gray-800 p-4 rounded-lg mb-6">
+      <p class="mb-4">A pilha funciona no estilo <span class="font-bold text-yellow-300">LIFO</span> (Last In, First Out). Ou seja, o último valor inserido será o primeiro a ser removido. Usando listas encadeadas, conseguimos implementar essa estrutura de forma dinâmica usando ponteiros.</p>
+      
+      <div class="flex items-start mb-2">
+        <i class="fas fa-lightbulb text-yellow-400 mt-1 mr-2"></i>
+        <p>Imagine uma pilha de pratos: você sempre coloca um novo prato no topo e pega o prato do topo quando precisa.</p>
+      </div>
+    </div>
+    
+    <div class="bg-gray-800 p-4 rounded-lg mb-6">
+      <p class="font-bold text-yellow-400 mb-3">Aqui vão 5 macetes essenciais para dominar pilhas encadeadas:</p>
+      <ul id="macetes" class="space-y-2">
+        <li class="flex items-start">
+          <span class="bg-yellow-400 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <span>Sempre inicialize o topo com <span class="font-mono highlight">NULL</span>.</span>
+        </li>
+        <li class="flex items-start">
+          <span class="bg-yellow-400 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <span>Use <span class="font-mono highlight">malloc/new</span> ao empilhar (alocação dinâmica).</span>
+        </li>
+        <li class="flex items-start">
+          <span class="bg-yellow-400 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <span>Ao desempilhar, libere memória com <span class="font-mono highlight">free/delete</span>.</span>
+        </li>
+        <li class="flex items-start">
+          <span class="bg-yellow-400 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+          <span>Nunca acesse <span class="font-mono highlight">topo->valor</span> sem verificar se <span class="font-mono highlight">topo != NULL</span>.</span>
+        </li>
+        <li class="flex items-start">
+          <span class="bg-yellow-400 text-gray-900 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">5</span>
+          <span>Para percorrer a pilha, use <span class="font-mono highlight">while (topo != NULL)</span>.</span>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="text-center">
+      <button onclick="iniciarQuestoes()" class="bg-green-500 hover:bg-green-600 text-gray-900 font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg flex items-center mx-auto">
+        <i class="fas fa-play mr-2"></i> Iniciar Quiz
+      </button>
+      
+      <div class="mt-4 text-gray-400 text-sm">
+        <i class="fas fa-info-circle mr-1"></i> 30 questões para testar seu conhecimento
+      </div>
+    </div>
   </div>
-
+  
   <!-- Área do Quiz -->
-  <div id="quizContainer" style="display:none;">
-    <h1>Estudo de Pilhas com Lista Encadeada</h1>
-    <p>Responda cada questão. Você saberá na hora se acertou ou errou. No final, verá o total de acertos.</p>
-    <div id="quiz"></div>
-    <button id="proximaBtn" onclick="mostrarProxima()">Próxima</button>
-    <div id="resultado"></div>
+  <div id="quizContainer" class="hidden max-w-4xl mx-auto">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- Header do Quiz -->
+      <div class="bg-gray-800 text-white p-4 md:p-6">
+        <div class="flex justify-between items-center mb-2">
+          <h1 class="text-xl md:text-2xl font-bold flex items-center">
+            <i class="fas fa-code-branch mr-3 text-green-400"></i> Pilhas com Lista Encadeada
+          </h1>
+          <div id="progress" class="text-sm font-mono">
+            <span id="currentQuestion">1</span>/<span id="totalQuestions">30</span>
+          </div>
+        </div>
+        <p class="text-gray-300">Responda cada questão. Você receberá feedback imediato após cada resposta.</p>
+      </div>
+      
+      <!-- Conteúdo do Quiz -->
+      <div class="p-4 md:p-6">
+        <div id="quiz" class="mb-6"></div>
+        
+        <div id="feedback" class="hidden mb-6 p-4 rounded-lg"></div>
+        
+        <div class="flex justify-between items-center">
+          <div id="score" class="text-sm font-mono hidden">
+            Pontuação: <span id="scoreValue">0</span>/<span id="maxScore">30</span>
+          </div>
+          
+          <button id="proximaBtn" onclick="mostrarProxima()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all transform hover:scale-105 hidden">
+            Próxima <i class="fas fa-arrow-right ml-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Resultado Final -->
+  <div id="resultadoContainer" class="hidden max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    <div class="bg-gray-800 text-white p-6 text-center">
+      <i class="fas fa-trophy text-4xl text-yellow-400 mb-4"></i>
+      <h2 class="text-2xl font-bold mb-2">Quiz Concluído!</h2>
+      <p id="resultadoMessage" class="text-gray-300"></p>
+    </div>
+    
+    <div class="p-6">
+      <div id="resultDetails" class="mb-6"></div>
+      
+      <div class="flex justify-center space-x-4">
+        <button onclick="reiniciarQuiz()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition-all transform hover:scale-105">
+          <i class="fas fa-redo mr-2"></i> Refazer Quiz
+        </button>
+        <button onclick="voltarParaInicio()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-all transform hover:scale-105">
+          <i class="fas fa-home mr-2"></i> Voltar ao Início
+        </button>
+      </div>
+    </div>
   </div>
 
-  <script>
-    // Função para iniciar o quiz: esconde apresentação e exibe o quiz
-    function iniciarQuestoes() {
-      document.getElementById('apresentacao').style.display = 'none';
-      document.getElementById('quizContainer').style.display = 'block';
-      mostrarQuestao();
-    }
-
-    // Array de questões
-    const questoes = [
-      { pergunta: "O que é uma pilha na estrutura de dados?", opcoes: ["FIFO", "Banco de dados", "LIFO", "Função recursiva"], correta: 2, explicacao: "Pilha segue o princípio LIFO: o último elemento inserido é o primeiro a sair." },
-      { pergunta: "Qual operação insere um elemento no topo da pilha?", opcoes: ["Pop", "Top", "Push", "Peek"], correta: 2, explicacao: "Push é a operação que insere um novo elemento no topo da pilha." },
-      { pergunta: "Qual operação remove o elemento do topo da pilha?", opcoes: ["Push", "Peek", "Insert", "Pop"], correta: 3, explicacao: "Pop remove o elemento que está no topo da pilha." },
-      { pergunta: "O que a função 'verTopo' retorna?", opcoes: ["Total de elementos", "Valor do topo", "Remove topo", "Insere elemento"], correta: 1, explicacao: "verTopo retorna o valor do nó no topo sem removê-lo." },
-      { pergunta: "Como identificamos uma pilha vazia?", opcoes: ["Topo aponta pro último", "Pop retorna zero", "Topo é nulo", "Todos apontam para nullptr"], correta: 2, explicacao: "Se o ponteiro do topo for nulo, a pilha está vazia." },
-      { pergunta: "O que o ponteiro 'próximo' de um nó armazena?", opcoes: ["Valor atual", "Quantidade", "Próximo nó", "Topo da pilha"], correta: 2, explicacao: "Ele armazena o endereço do próximo nó na lista." },
-      { pergunta: "Como inicializar a pilha vazia?", opcoes: ["Topo aponta pro último", "Topo = nullptr", "Topo = 0", "Remover todos os elementos"], correta: 1, explicacao: "Atribuímos nullptr ao topo da pilha." },
-      { pergunta: "O que faz a função 'exibirPilha'?", opcoes: ["Adiciona um nó", "Mostra todos os elementos", "Busca um valor", "Libera memória"], correta: 1, explicacao: "Ela percorre a pilha e exibe seus valores." },
-      { pergunta: "O que acontece com o antigo topo após um empilhar?", opcoes: ["É excluído", "Vai pro fim", "Vira próximo do novo topo", "Vira nó base"], correta: 2, explicacao: "O novo nó aponta para o antigo topo." },
-      { pergunta: "Por que usamos ponteiro por referência na função empilhar?", opcoes: ["Evitar alocação", "Copiar valor", "Modificar o topo fora da função", "Retornar valor"], correta: 2, explicacao: "Passando por referência, alteramos o topo real." },
-      { pergunta: "O que acontece se desempilharmos com pilha vazia?", opcoes: ["Empilha nulo", "Erro + -1", "Nada acontece", "Finaliza programa"], correta: 1, explicacao: "Mostra erro e retorna -1." },
-      { pergunta: "Resultado da sequência: empilha 5, empilha 10, desempilha, empilha 20, verTopo?", opcoes: ["5", "10", "20", "Erro"], correta: 2, explicacao: "Último valor empilhado é 20." },
-      { pergunta: "Ordem após empilhar 10, 20, 30?", opcoes: ["10 -> 20 -> 30", "30 -> 20 -> 10", "NULL <- 10", "30 <- 20 <- 10"], correta: 1, explicacao: "Novo elemento vai sempre no topo." },
-      { pergunta: "Por que retornamos -1 em verTopo se vazio?", opcoes: ["Para desalocar", "Reiniciar pilha", "Indicar sem valor", "Evitar execução"], correta: 2, explicacao: "É uma forma de aviso que não há valor." },
-      { pergunta: "Como a pilha encadeada é eficiente?", opcoes: ["Acesso direto a qualquer nó", "Todos têm o mesmo valor", "Não usa ponteiros", "Operações só no topo"], correta: 3, explicacao: "Só manipulamos o topo, o que é rápido." },
-      { pergunta: "Função 'pilhaVazia' retorna o quê?", opcoes: ["true se topo == nullptr", "false sempre", "true se topo != nullptr", "Erro"], correta: 0, explicacao: "Verifica se o topo aponta pra nada." },
-      { pergunta: "No código: empilhar(topo, 10); empilhar(topo, 20); desempilhar(topo); verTopo(topo); qual valor?", opcoes: ["10", "20", "NULL", "30"], correta: 0, explicacao: "20 foi removido, 10 é o topo." },
-      { pergunta: "Por que empilhar aloca dinamicamente?", opcoes: ["Evitar ponteiro", "Manter o tamanho fixo", "Criar novo nó na memória", "Liberar memória"], correta: 2, explicacao: "Cada push cria um novo nó com new." },
-      { pergunta: "Que parte da struct armazena o valor da pilha?", opcoes: ["Ponteiro", "Valor", "Topo", "NULL"], correta: 1, explicacao: "Campo 'valor' guarda a informação do nó." },
-      { pergunta: "Por que chamamos a estrutura de nó?", opcoes: ["Por ser circular", "Porque encadeia outros nós", "Por não usar ponteiros", "Por conter apenas dados"], correta: 1, explicacao: "Cada nó aponta para outro, criando a cadeia." },
-      { pergunta: "Como é feita a exibição da pilha?", opcoes: ["Do fim ao topo", "Recursivamente", "Iterando do topo até NULL", "Aleatoriamente"], correta: 2, explicacao: "Percorremos a partir do topo até o fim." },
-      { pergunta: "Qual tipo usamos na struct No?", opcoes: ["int e No*", "char e int", "float e string", "int apenas"], correta: 0, explicacao: "int valor e No* proximo." },
-      { pergunta: "O que o topo aponta após desempilhar?", opcoes: ["Pro novo elemento", "Pro nó removido", "Pro próximo do antigo topo", "NULL"], correta: 2, explicacao: "Topo agora aponta para o próximo nó." },
-      { pergunta: "Qual é o retorno da função desempilhar?", opcoes: ["Valor removido", "Endereço de memória", "Novo topo", "NULL"], correta: 0, explicacao: "Ela retorna o valor que estava no topo." },
-      { pergunta: "Quando usar pilha encadeada em vez de array?", opcoes: ["Quando o tamanho é fixo", "Para otimizar busca", "Quando o tamanho da pilha é variável", "Para armazenar strings"], correta: 2, explicacao: "Pilha encadeada cresce dinamicamente." },
-      { pergunta: "Por que liberar memória ao desempilhar?", opcoes: ["Para resetar topo", "Evitar vazamento de memória", "Remover valor", "Evitar erro"], correta: 1, explicacao: "Precisamos deletar o nó que foi removido." },
-      { pergunta: "Quantos ponteiros são necessários na struct No?", opcoes: ["2", "1", "0", "3"], correta: 1, explicacao: "Apenas um ponteiro para o próximo nó." },
-      { pergunta: "Qual saída da função exibirPilha após push 5, 10, 15?", opcoes: ["5 -> 10 -> 15", "15 -> 10 -> 5", "NULL", "Erro"], correta: 1, explicacao: "15 foi o último inserido, está no topo." },
-      { pergunta: "Em que situação o topo da pilha será NULL?", opcoes: ["Quando cheia", "Após último pop", "Quando cheia de inteiros", "Quando empilhar"], correta: 1, explicacao: "Pilha vazia: topo = NULL." },
-      { pergunta: "Qual saída para verTopo se pilha está vazia?", opcoes: ["0", "NULL", "-1", "Erro"], correta: 2, explicacao: "Retorna -1 para indicar ausência de valor." }
-    ];
-
-    let indiceAtual = 0;
-    let acertos = 0;
-
-    const quiz = document.getElementById('quiz');
-    const proximaBtn = document.getElementById('proximaBtn');
-    const resultado = document.getElementById('resultado');
-
-    function mostrarQuestao() {
-      quiz.innerHTML = '';
-      proximaBtn.style.display = 'none';
-      resultado.innerText = '';
-
-      const q = questoes[indiceAtual];
-      const div = document.createElement('div');
-      div.className = 'pergunta';
-      div.innerHTML = `<p><b>Questão ${indiceAtual + 1}:</b> ${q.pergunta}</p>`;
-      q.opcoes.forEach((opcao, i) => {
-        const botao = document.createElement('button');
-        botao.textContent = opcao;
-        botao.className = 'opcao';
-        botao.onclick = () => verificarResposta(i, q);
-        div.appendChild(botao);
-      });
-      quiz.appendChild(div);
-    }
-
-    function verificarResposta(resposta, q) {
-      const botoes = document.querySelectorAll('.opcao');
-      botoes.forEach(btn => btn.disabled = true);
-      const feedback = document.createElement('p');
-      feedback.className = 'feedback';
-      if (resposta === q.correta) {
-        feedback.style.color = 'green';
-        feedback.textContent = '✔️ Resposta correta!';
-        acertos++;
-      } else {
-        feedback.textContent = `❌ Resposta incorreta. Explicação: ${q.explicacao}`;
-      }
-      quiz.appendChild(feedback);
-      proximaBtn.style.display = 'inline-block';
-    }
-
-    function mostrarProxima() {
-      indiceAtual++;
-      if (indiceAtual < questoes.length) {
-        mostrarQuestao();
-      } else {
-        quiz.innerHTML = '';
-        proximaBtn.style.display = 'none';
-        resultado.innerText = `Você acertou ${acertos} de ${questoes.length} questões.`;
-      }
-    }
-
-    // Animação do código exemplo
-    const codigoExemplo = `struct No {
-  int valor;
-  No* proximo;
-};
-
-void empilhar(No*& topo, int valor) {
-  No* novo = new No;
-  novo->valor = valor;
-  novo->proximo = topo;
-  topo = novo;
-}`;
-
-    let i = 0;
-    const areaCodigo = document.getElementById('codigoAnimado');
-    function escreverCodigo() {
-      if (i < codigoExemplo.length) {
-        areaCodigo.textContent += codigoExemplo.charAt(i);
-        i++;
-        setTimeout(escreverCodigo, 30);
-      }
-    }
-    escreverCodigo();
-  </script>
+  <!-- Link para seu JavaScript customizado -->
+  <script src="script.js"></script>
 </body>
 </html>
