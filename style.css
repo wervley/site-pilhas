@@ -1,38 +1,65 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    text-align: center;
-    padding: 30px;
+/* Animação de digitação (typewriter) e blink-caret */
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
   }
-  
-  h1 {
-    color: #333;
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #4ade80; }
   }
-  
-  p {
-    color: #555;
-    margin-bottom: 20px;
-  }
-  
-  .disciplinas {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 300px;
+  .typewriter {
+    overflow: hidden;
+    border-right: .15em solid #4ade80;
+    white-space: pre;
     margin: 0 auto;
+    letter-spacing: .15em;
+    animation: 
+      typewriter 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
   }
   
-  .btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background-color 0.3s;
+  /* Efeitos de animação diversos */
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+  @keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  .pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .fade-in {
+    animation: fadeIn 1s ease-in;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   
-  .btn:hover {
-    background-color: #45a049;
+  /* Estilos para feedback das respostas */
+  .option-selected {
+    transform: scale(0.98);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  .correct-answer {
+    background-color: #dcfce7 !important;
+    border-color: #4ade80 !important;
+  }
+  .wrong-answer {
+    background-color: #fee2e2 !important;
+    border-color: #f87171 !important;
+  }
+  
+  /* Destaque para trechos importantes */
+  .highlight {
+    background-color: #fef08a;
+    padding: 0.2rem;
+    border-radius: 0.25rem;
   }
   
